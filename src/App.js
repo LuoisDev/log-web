@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+// -- React and related libs
+import React from "react";
+import { Switch, Route, Redirect } from "react-router";
+import { HashRouter } from "react-router-dom";
 
-function App() {
+// -- Redux
+import { connect } from "react-redux";
+
+// -- Custom Components
+import ErrorPage from "./pages/error/ErrorPage";
+import Login from "./pages/login/Login";
+
+// -- Redux Actions
+import { logoutUser } from "./actions/auth";
+
+// -- Third Party Libs
+import { ToastContainer } from "react-toastify";
+
+// -- Services
+import isAuthenticated from "./services/authService";
+
+// -- Component Styles
+import "./styles/app.scss";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Layout from "./components/Layout/Layout";
+
+const PrivateRoute = ({ dispatch, component, ...rest }) => {
+  if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
+    console.log("Not authenticated");
+    dispatch(logoutUser());
+    return (<Redirect to="/login" />)
+  } else {
+    console.log("Authenticated");
+    return (
+      <Route { ...rest } render={props => (React.createElement(component, props))} />
+    );
+  }
+};
+
+const App = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ToastContainer/>
+      <HashRouter>
+        <Switch>
+          <Route path="/" exact render={() => <Redirect to="/dashboard" />} />
+          <PrivateRoute path="/dashboard" dispatch={props.dispatch} component={Layout} />
+          <Route path="/login"  component={Login} />
+          <Route path="/error" exact component={ErrorPage} />
+          <Route component={ErrorPage}/>
+          <Route path='*' exact={true} render={() => <Redirect to="/error" />} />
+        </Switch>
+      </HashRouter>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(App);

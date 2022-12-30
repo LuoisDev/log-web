@@ -1,0 +1,16 @@
+@import '../../styles/helpers';
+
+.btTap {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semi-bold;
+    background-color: aqua;
+    color: blue;
+}
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+
+}
