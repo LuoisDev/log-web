@@ -1,39 +1,26 @@
 {
   "files": {
-    "main.css": "/log-web/static/css/main.9068ef72.chunk.css",
-    "main.js": "/log-web/static/js/main.0f187755.chunk.js",
-    "main.js.map": "/log-web/static/js/main.0f187755.chunk.js.map",
+    "main.css": "/log-web/static/css/main.b12e6559.chunk.css",
+    "main.js": "/log-web/static/js/main.cc8068a5.chunk.js",
+    "main.js.map": "/log-web/static/js/main.cc8068a5.chunk.js.map",
     "runtime-main.js": "/log-web/static/js/runtime-main.91f1440d.js",
     "runtime-main.js.map": "/log-web/static/js/runtime-main.91f1440d.js.map",
     "static/css/2.cf411e2c.chunk.css": "/log-web/static/css/2.cf411e2c.chunk.css",
-    "static/js/2.93975ae5.chunk.js": "/log-web/static/js/2.93975ae5.chunk.js",
-    "static/js/2.93975ae5.chunk.js.map": "/log-web/static/js/2.93975ae5.chunk.js.map",
+    "static/js/2.04356fb0.chunk.js": "/log-web/static/js/2.04356fb0.chunk.js",
+    "static/js/2.04356fb0.chunk.js.map": "/log-web/static/js/2.04356fb0.chunk.js.map",
     "index.html": "/log-web/index.html",
     "static/css/2.cf411e2c.chunk.css.map": "/log-web/static/css/2.cf411e2c.chunk.css.map",
-    "static/css/main.9068ef72.chunk.css.map": "/log-web/static/css/main.9068ef72.chunk.css.map",
-    "static/js/2.93975ae5.chunk.js.LICENSE.txt": "/log-web/static/js/2.93975ae5.chunk.js.LICENSE.txt",
+    "static/css/main.b12e6559.chunk.css.map": "/log-web/static/css/main.b12e6559.chunk.css.map",
+    "static/js/2.04356fb0.chunk.js.LICENSE.txt": "/log-web/static/js/2.04356fb0.chunk.js.LICENSE.txt",
     "static/media/app.scss": "/log-web/static/media/la-solid-900.a8130346.svg",
     "static/media/Group.34908dc4.svg": "/log-web/static/media/Group.34908dc4.svg",
-    "static/media/basketIcon.5db6921e.svg": "/log-web/static/media/basketIcon.5db6921e.svg",
-    "static/media/calendarIcon.32a68d66.svg": "/log-web/static/media/calendarIcon.32a68d66.svg",
-    "static/media/cloudIcon.16c9d817.svg": "/log-web/static/media/cloudIcon.16c9d817.svg",
-    "static/media/envelopeIcon.9a98f28a.svg": "/log-web/static/media/envelopeIcon.9a98f28a.svg",
-    "static/media/errorImage.f2dac3af.svg": "/log-web/static/media/errorImage.f2dac3af.svg",
-    "static/media/funnelIcon.6c3b50d6.svg": "/log-web/static/media/funnelIcon.6c3b50d6.svg",
-    "static/media/logoutOutlined.b7ca2242.svg": "/log-web/static/media/logoutOutlined.b7ca2242.svg",
-    "static/media/mariaImage.e5327aa4.jpg": "/log-web/static/media/mariaImage.e5327aa4.jpg",
-    "static/media/moreIcon.394ddcb0.svg": "/log-web/static/media/moreIcon.394ddcb0.svg",
-    "static/media/notificationImage.5f55e802.jpg": "/log-web/static/media/notificationImage.5f55e802.jpg",
-    "static/media/optionsIcon.fd35aa2b.svg": "/log-web/static/media/optionsIcon.fd35aa2b.svg",
-    "static/media/printerIcon.7c676479.svg": "/log-web/static/media/printerIcon.7c676479.svg",
-    "static/media/searchIcon.ea6410cb.svg": "/log-web/static/media/searchIcon.ea6410cb.svg",
-    "static/media/user.13df436f.svg": "/log-web/static/media/user.13df436f.svg"
+    "static/media/errorImage.f2dac3af.svg": "/log-web/static/media/errorImage.f2dac3af.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.91f1440d.js",
     "static/css/2.cf411e2c.chunk.css",
-    "static/js/2.93975ae5.chunk.js",
-    "static/css/main.9068ef72.chunk.css",
-    "static/js/main.0f187755.chunk.js"
+    "static/js/2.04356fb0.chunk.js",
+    "static/css/main.b12e6559.chunk.css",
+    "static/js/main.cc8068a5.chunk.js"
   ]
 }
