@@ -7,62 +7,32 @@ import {
     Pagination,
     PaginationItem,
     PaginationLink,
-    ButtonDropdown,
-    Dropdown,
-    DropdownMenu,
-    DropdownToggle,
-    DropdownItem,
-    Label,
     Badge,
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget.js";
 
-// import BootstrapTable from "react-bootstrap-table-next";
-// import paginationFactory from 'react-bootstrap-table2-paginator';
-// import MUIDataTable from "mui-datatables";
-
-import cloudIcon from "../../assets/tables/cloudIcon.svg";
-import funnelIcon from "../../assets/tables/funnelIcon.svg";
-import optionsIcon from "../../assets/tables/optionsIcon.svg";
-import printerIcon from "../../assets/tables/printerIcon.svg";
-import searchIcon from "../../assets/tables/searchIcon.svg";
-import moreIcon from "../../assets/tables/moreIcon.svg";
 
 import s from "./Tables.module.scss";
 import data from "./data.json";
+import { base_color, inactive_color } from "../../const/index.js";
+import Header from "../../components/Header/Header.js";
 
 const Dashboard = function () {
 
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [secondTable] = useState(data);
-    const [firstTableCurrentPage, setFirstTableCurrentPage] = useState(0);
     const [secondTableCurrentPage, setSecondTableCurrentPage] = useState(0);
-    const [tableDropdownOpen, setTableMenuOpen] = useState(false);
 
     const pageSize = 36;
     const secondTablePagesCount = Math.ceil(secondTable.length / pageSize);
 
-    const setFirstTablePage = (e, index) => {
-        e.preventDefault();
-        setFirstTableCurrentPage(index);
-    }
 
     const setSecondTablePage = (e, index) => {
         e.preventDefault();
         setSecondTableCurrentPage(index);
     }
-
-    const toggle = () => {
-        setDropdownOpen(!dropdownOpen);
-    }
-
-
-
-    const tableMenuOpen = () => {
-        setTableMenuOpen(!tableDropdownOpen);
-    }
     return (
         <div>
+            <Header></Header>
             <Row>
                 <Col>
                     <Row className="mb-4">
@@ -75,6 +45,7 @@ const Dashboard = function () {
                                     <Table className="table-striped table-borderless table-hover" responsive>
                                         <thead>
                                             <tr>
+                                                <th>STT</th>
                                                 <th>MAC</th>
                                                 <th>Local IP</th>
                                                 <th>Customer email</th>
@@ -91,17 +62,17 @@ const Dashboard = function () {
                                                     secondTableCurrentPage * pageSize,
                                                     (secondTableCurrentPage + 1) * pageSize
                                                 )
-                                                .map(item => (
+                                                .map((item, index) => (
                                                     <tr key={uuidv4()}>
-
+                                                        <td>{index}</td>
                                                         <td>{item.mac}</td>
                                                         <td>{item.localip}</td>
                                                         <td>Chưa có email</td>
                                                         <td>Chưa có tên nhà</td>
                                                         <td>{item.hc_version}</td>
-                                                        <td>{item.is_active}</td>
-                                                        <td>{item.is_master}</td>
-                                                        <td>{item.is_connect}</td>
+                                                        {item.is_active == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Yes</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >No</Badge></td>}
+                                                        {item.is_master == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Master</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Slave</Badge></td>}
+                                                        {item.is_connect == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Connect</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Disconnect</Badge></td>}
                                                     </tr>
                                                 ))}
                                         </tbody>

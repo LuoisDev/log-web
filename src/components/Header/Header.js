@@ -2,45 +2,22 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 
 import {
   Navbar,
-  Nav,
-  NavItem,
-  NavLink,
-  InputGroupAddon,
-  InputGroup,
   Input,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Form,
   FormGroup,
   FormText,
   Col,
-  Row,
+  Row, Label,Button
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget.js";
 
 import { logoutUser } from "../../actions/auth";
 import { closeSidebar, openSidebar } from "../../actions/navigation";
-import MenuIcon from "../Icons/HeaderIcons/MenuIcon";
-import SearchBarIcon from "../Icons/HeaderIcons/SearchBarIcon";
-import SearchIcon from "../Icons/HeaderIcons/SearchIcon";
 
-import ProfileIcon from "../../assets/navbarMenus/pfofileIcons/ProfileIcon";
-import MessagesIcon from "../../assets/navbarMenus/pfofileIcons/MessagesIcon";
-import TasksIcon from "../../assets/navbarMenus/pfofileIcons/TasksIcon";
 
-import logoutIcon from "../../assets/navbarMenus/pfofileIcons/logoutOutlined.svg";
-import basketIcon from "../../assets/navbarMenus/basketIcon.svg";
-import calendarIcon from "../../assets/navbarMenus/calendarIcon.svg";
-import envelopeIcon from "../../assets/navbarMenus/envelopeIcon.svg";
-import mariaImage from "../../assets/navbarMenus/mariaImage.jpg";
-import notificationImage from "../../assets/navbarMenus/notificationImage.jpg";
-import userImg from "../../assets/user.svg";
 
 import s from "./Header.module.scss";
 import "animate.css";
@@ -92,51 +69,44 @@ const Header = (props) => {
   }
 
   return (
-    <Navbar className={`${s.root} d-print-none`}>
-      <div>
-        <NavLink
-          onClick={() => toggleSidebar()}
-          className={`d-md-none mr-3 ${s.navItem}`}
-          href="#"
-        >
-          <MenuIcon className={s.menuIcon} />
-        </NavLink>
-      </div>
-      <Widget className={s.widget_pie}>
-        <Row style={{height: 200,alignItems:'center'}}>
-          <Col >
+    <Navbar>
 
+      <Widget className={s.widget_pie}>
+        <Row style={{ height: 200, alignItems: 'center' }}>
+          <Col >
             <PieChart width={200} height={200}>
-                <Pie
-                  data={data}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={renderCustomizedLabel}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-              </PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
           </Col>
 
           <Col>
+          <FormText color="black" className="my-3">{`All: ${data[0].value+data[1].value} devices`}</FormText>
+
             {data.map((entry, index) => (
               <div className={s.label}>
                 <Dot color={COLORS[index]} />
-                <span className="body-3 ml-2">{entry.name}</span>
+                <span className="body-3 ml-2">{entry.value +" "+ entry.name}</span>
               </div>
             ))}
           </Col>
         </Row>
       </Widget>
       <Widget className={s.widget_p}>
-        <Row className="gutter mb-4">
-          <Col className="mb-4 mb-md-0" xs={12} md={6}>
+        <Row>
+          <Col className="mb-4 mb-md-0" xs={12} md={4}>
             <FormGroup className="my-3">
               <FormText>Mac</FormText>
               <Input
@@ -167,7 +137,7 @@ const Header = (props) => {
               />
             </FormGroup>
           </Col>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={4}>
             <FormGroup className="my-3">
               <FormText>Lrn</FormText>
               <Input
@@ -199,25 +169,71 @@ const Header = (props) => {
               />
             </FormGroup>
           </Col>
-          {/* <Col xs={12} md={6}>
-          <div
-              className="checkbox checkbox-primary mr-1">
-              <input
-                // onChange={() => props.toggleTask(task.id)}
-                // checked={task.completed}
-                className="styled"
-                id={`checkbox`}
-                type="checkbox"
-              />
-              <label className="form-check-label" 
-              // htmlFor={`checkbox${task.id}`}
-               />
-            </div>
-          </Col> */}
 
+          <Col xs={12} md={4}>
+            <FormText className="my-3">Home name</FormText>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              All
+              </Label>
+            </FormGroup>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              Offline
+              </Label>
+            </FormGroup>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              Online
+              </Label>
+            </FormGroup>
+            <FormText className="my-3">Type</FormText>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              All
+              </Label>
+            </FormGroup>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              Master
+              </Label>
+            </FormGroup>
+            <FormGroup
+              check
+              inline
+            >
+              <Input type="checkbox" />
+              <Label check>
+              Slave
+              </Label>
+            </FormGroup>
+          </Col>
+          <div className={s.button_submit}>
+            <Button color="success">Search</Button>
+          </div>
         </Row>
       </Widget>
-      
+
     </Navbar>
   )
 }

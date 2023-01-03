@@ -120,8 +120,7 @@
 }
 .widget_p {
   padding: 0px 32px;
-  width: 50wp;
-  box-shadow: 4px 4px 16px 0 rgba(77, 83, 224, 0.2);
+  width: 60vw;
 
   @media (max-width: breakpoint-max(xs)) {
     width: 100vw;
@@ -130,6 +129,13 @@
 .widget_pie {
   width: 400px;
   box-shadow: 4px 4px 16px 0 rgba(77, 83, 224, 0.2);
-
-
+}
+.button_submit {
+  justify-content: start ;
+  align-items: center;
+  height: 45px;
+  margin-left: 16px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semi-bold;
+  color: $base-color;
 }
