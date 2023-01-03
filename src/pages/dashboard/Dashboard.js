@@ -16,9 +16,14 @@ import s from "./Tables.module.scss";
 import data from "./data.json";
 import { base_color, inactive_color } from "../../const/index.js";
 import Header from "../../components/Header/Header.js";
+import { Link, useHistory } from "react-router-dom";
 
 const Dashboard = function () {
+    const history = useHistory();
+    const handleRowClick = (row) => {
+        history.push(`/use-cases/${row}`);
 
+    }  
     const [secondTable] = useState(data);
     const [secondTableCurrentPage, setSecondTableCurrentPage] = useState(0);
 
@@ -63,7 +68,9 @@ const Dashboard = function () {
                                                     (secondTableCurrentPage + 1) * pageSize
                                                 )
                                                 .map((item, index) => (
-                                                    <tr key={uuidv4()}>
+
+                                                    <tr  key={uuidv4()}>
+                                                        <Link to={{pathname: `/detail`,state: item.mac}} >
                                                         <td>{index}</td>
                                                         <td>{item.mac}</td>
                                                         <td>{item.localip}</td>
@@ -73,6 +80,7 @@ const Dashboard = function () {
                                                         {item.is_active == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Yes</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >No</Badge></td>}
                                                         {item.is_master == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Master</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Slave</Badge></td>}
                                                         {item.is_connect == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Connect</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Disconnect</Badge></td>}
+                                                        </Link>
                                                     </tr>
                                                 ))}
                                         </tbody>

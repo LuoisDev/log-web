@@ -23,6 +23,8 @@ import isAuthenticated from "./services/authService";
 import "./styles/app.scss";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Layout from "./components/Layout/Layout";
+import Detail from "./pages/detail/Detail";
+import LayoutDetail from "./components/LayoutDetail/LayoutDetail";
 
 const PrivateRoute = ({ dispatch, component, ...rest }) => {
   if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
@@ -45,6 +47,7 @@ const App = (props) => {
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/dashboard" />} />
           <PrivateRoute path="/dashboard" dispatch={props.dispatch} component={Layout} />
+          <PrivateRoute path="/detail" dispatch={props.dispatch} component={LayoutDetail} />
           <Route path="/login"  component={Login} />
           <Route path="/error" exact component={ErrorPage} />
           <Route component={ErrorPage}/>
