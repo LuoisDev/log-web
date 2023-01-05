@@ -22,11 +22,6 @@ import { closeSidebar, openSidebar } from "../../actions/navigation";
 import s from "./Header.module.scss";
 import "animate.css";
 import Dot from "../Dot/Dot.js";
-const data = [
-  { name: 'Online', value: 400 },
-  { name: 'Offline', value: 1200 },
-
-];
 
 const COLORS = ['#B8C3BF', '#008C4F'];
 
@@ -42,7 +37,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     </text>
   );
 };
-const Header = (props) => {
+const Header = ({props}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -67,16 +62,16 @@ const Header = (props) => {
   const doLogout = () => {
     props.dispatch(logoutUser());
   }
-
+console.log('props', props);
   return (
-    <Navbar>
+    <Navbar style={{justifyContent: 'space-around'}}>
 
       <Widget className={s.widget_pie}>
         <Row style={{ height: 200, alignItems: 'center' }}>
           <Col >
             <PieChart width={200} height={200}>
               <Pie
-                data={data}
+                data={props}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -85,7 +80,7 @@ const Header = (props) => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {data.map((entry, index) => (
+                {props.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -93,9 +88,9 @@ const Header = (props) => {
           </Col>
 
           <Col>
-          <FormText color="black" className="my-3">{`All: ${data[0].value+data[1].value} devices`}</FormText>
+          <FormText color="black" className="my-3">{`All: ${props[0].value+props[1].value} devices`}</FormText>
 
-            {data.map((entry, index) => (
+            {props.map((entry, index) => (
               <div className={s.label}>
                 <Dot color={COLORS[index]} />
                 <span className="body-3 ml-2">{entry.value +" "+ entry.name}</span>

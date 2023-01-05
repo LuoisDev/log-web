@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { withRouter, Redirect, Link } from "react-router-dom";
+import { withRouter, Redirect, Link,useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Container,
@@ -16,20 +16,44 @@ import Footer from "../../components/Footer/Footer";
 import { loginUser } from "../../actions/auth";
 import hasToken from "../../services/authService";
 import s from "./Login.module.scss";
+import axios from 'axios';
 
 import SofiaLogo from "../../components/Icons/SofiaLogo.js";
 
 import logoLumi from "../../assets/Group.svg";
+import { BASE_URL } from "../../const/url";
 const Login = (props) => {
+  const history = useHistory();
 
   const [state, setState] = useState({
-    email: 'admin',
-    password: 'password',
+    email: 'monitoring',
+    password: 'lumivn274',
   })
 
-  const doLogin = (e) => {
+  const doLogin = async (e) => {
     e.preventDefault();
-    props.dispatch(loginUser({ password: state.password, email: state.email }))
+    const login_url= BASE_URL+ '/hc-monitoring/user-login';
+    const data = {
+      username: state.email,
+      password: state.password
+    }
+    try {
+      const res = await axios.post(login_url, data, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': 'true'
+      });
+      console.log('res=========', res.data.data.access_token);
+      if (res.data.success) {
+        console.log('a');
+        props.dispatch(loginUser({ access_token: res.data.data.access_token }))
+        history.push(`/dashboard`);
+
+      }
+
+    } catch (err) {
+      console.log('abc', err.response.data.error)
+
+    }
   }
 
   const changeCreds = (event) => {
@@ -38,6 +62,7 @@ const Login = (props) => {
 
   const { from } = props.location.state || { from: { pathname: '/dashboard' } };
   if (hasToken(JSON.parse(localStorage.getItem('authenticated')))) {
+    console.log('avc');
     return (
       <Redirect to={from} />
     )

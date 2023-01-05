@@ -31,6 +31,7 @@ export function receiveLogout() {
 // logs the user out
 export function logoutUser() {
   return (dispatch) => {
+    console.log('logout');
     dispatch(requestLogout());
     localStorage.removeItem('authenticated');
     dispatch(receiveLogout());
@@ -40,8 +41,11 @@ export function logoutUser() {
 export function loginUser(creds) {
   return (dispatch) => {
     dispatch(receiveLogin());
-    if (creds.email.length > 0 && creds.password.length > 0) {
+    if (creds.access_token.length > 0 ) {
+      console.log('creds.access_token', creds.access_token);
       localStorage.setItem('authenticated', true)
+      localStorage.setItem('access_token', creds.access_token)
+
     } else {
       dispatch(loginError('Something was wrong. Try again'));
     }

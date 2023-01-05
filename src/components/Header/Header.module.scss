@@ -119,15 +119,16 @@
   margin-top: 13px;
 }
 .widget_p {
-  padding: 0px 32px;
-  width: 60vw;
+  width: 54vw;
+  margin-top: 32px;
+  padding: 0px 16px;
 
   @media (max-width: breakpoint-max(xs)) {
     width: 100vw;
   }
 }
 .widget_pie {
-  width: 400px;
+  width: 320px;
   box-shadow: 4px 4px 16px 0 rgba(77, 83, 224, 0.2);
 }
 .button_submit {

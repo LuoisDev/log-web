@@ -21,9 +21,7 @@ import isAuthenticated from "./services/authService";
 
 // -- Component Styles
 import "./styles/app.scss";
-import Dashboard from "./pages/dashboard/Dashboard";
 import Layout from "./components/Layout/Layout";
-import Detail from "./pages/detail/Detail";
 import LayoutDetail from "./components/LayoutDetail/LayoutDetail";
 
 const PrivateRoute = ({ dispatch, component, ...rest }) => {
