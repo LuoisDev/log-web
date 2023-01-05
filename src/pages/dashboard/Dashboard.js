@@ -50,7 +50,6 @@ const Dashboard = function () {
                                     <Table className="table-striped table-borderless table-hover" responsive>
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
                                                 <th>MAC</th>
                                                 <th>Local IP</th>
                                                 <th>Customer email</th>
@@ -71,7 +70,6 @@ const Dashboard = function () {
 
                                                     <tr  key={uuidv4()}>
                                                         <Link to={{pathname: `/detail`,state: item.mac}} >
-                                                        <td>{index}</td>
                                                         <td>{item.mac}</td>
                                                         <td>{item.localip}</td>
                                                         <td>Chưa có email</td>
