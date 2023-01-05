@@ -21,7 +21,7 @@ import { Link, useHistory } from "react-router-dom";
 const Dashboard = function () {
     const history = useHistory();
     const handleRowClick = (row) => {
-        history.push(`/use-cases/${row}`);
+        history.push(`/detail`);
 
     }  
     const [secondTable] = useState(data);
@@ -68,8 +68,8 @@ const Dashboard = function () {
                                                 )
                                                 .map((item, index) => (
 
-                                                    <tr  key={uuidv4()}>
-                                                        <Link to={{pathname: `/detail`,state: item.mac}} >
+                                                    <tr onClick={handleRowClick}  key={uuidv4()}>
+                                                        {/* <Link to={{pathname: `/detail`,state: item.mac}} > */}
                                                         <td>{item.mac}</td>
                                                         <td>{item.localip}</td>
                                                         <td>Chưa có email</td>
@@ -78,7 +78,7 @@ const Dashboard = function () {
                                                         {item.is_active == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Yes</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >No</Badge></td>}
                                                         {item.is_master == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Master</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Slave</Badge></td>}
                                                         {item.is_connect == 0 ? <td><Badge style={{ backgroundColor: base_color }} >Connect</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Disconnect</Badge></td>}
-                                                        </Link>
+                                                        {/* </Link> */}
                                                     </tr>
                                                 ))}
                                         </tbody>

@@ -25,11 +25,12 @@ const Detail = function (props) {
     //   }
     // },
     xaxis: {
-        labels: {
-          formatter: function (value) {
-            return moment(value).format("hh:mm");
-          }
-        }
+        // labels: {
+        //   formatter: function (value) {
+        //     return moment(value).format("hh:mm");
+        //   }
+        // }
+        type: 'datetime'
       },
     yaxis: {
       show: false
@@ -48,35 +49,35 @@ const Detail = function (props) {
             x: 'On',
             y: [
                 moment('24-12-2019 09:15', "DD-MM-YYYY hh:mm").valueOf(),
-                moment('24-12-2019 09:16', "DD-MM-YYYY hh:mm").valueOf()            ],
+                moment('24-12-2019 10:16', "DD-MM-YYYY hh:mm").valueOf()            ],
             fillColor: '#008C4F'
           },
           {
             x: 'Off',
             y: [
-                moment('24-12-2019 09:16', "DD-MM-YYYY hh:mm").valueOf(),
-                moment('24-12-2019 09:17', "DD-MM-YYYY hh:mm").valueOf()            ],
+                moment('24-12-2019 10:16', "DD-MM-YYYY hh:mm").valueOf(),
+                moment('24-12-2019 12:17', "DD-MM-YYYY hh:mm").valueOf()            ],
             fillColor: '#B8C3BF'
           },
           {
             x: 'On',
             y: [
-                moment('24-12-2019 09:17', "DD-MM-YYYY hh:mm").valueOf(),
-                moment('24-12-2019 09:18', "DD-MM-YYYY hh:mm").valueOf()            ],
+                moment('24-12-2019 12:17', "DD-MM-YYYY hh:mm").valueOf(),
+                moment('24-12-2019 14:18', "DD-MM-YYYY hh:mm").valueOf()            ],
             fillColor: '#008C4F'
           },
           {
             x: 'Off',
             y: [
-                moment('24-12-2019 09:18', "DD-MM-YYYY hh:mm").valueOf(),
-                moment('24-12-2019 09:19', "DD-MM-YYYY hh:mm").valueOf()            ],
+                moment('24-12-2019 14:18', "DD-MM-YYYY hh:mm").valueOf(),
+                moment('24-12-2019 18:19', "DD-MM-YYYY hh:mm").valueOf()            ],
             fillColor: '#B8C3BF'
           },
           {
             x: 'On',
             y: [
-                moment('24-12-2019 09:20', "DD-MM-YYYY hh:mm").valueOf(),
-                moment('25-12-2019 09:21', "DD-MM-YYYY hh:mm").valueOf()            ],
+                moment('24-12-2019 18:20', "DD-MM-YYYY hh:mm").valueOf(),
+                moment('26-12-2019 23:21', "DD-MM-YYYY hh:mm").valueOf()            ],
             fillColor: '#008C4F'
           },
         ]
