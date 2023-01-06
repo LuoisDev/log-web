@@ -4,11 +4,11 @@ import {
     LOGOUT_SUCCESS,
   } from "../actions/auth.js";
   
-  const authenticated = localStorage.getItem('authenticated');
+  const access_token = localStorage.getItem('access_token');
   
   export default function auth(state = {
     isFetching: false,
-    isAuthenticated: authenticated,
+    isAuthenticated: access_token,
   }, action) {
     switch (action.type) {
       case LOGIN_SUCCESS:

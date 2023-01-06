@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget.js";
 
-import { logoutUser } from "../../actions/auth";
 import { closeSidebar, openSidebar } from "../../actions/navigation";
 
 
@@ -22,6 +21,7 @@ import { closeSidebar, openSidebar } from "../../actions/navigation";
 import s from "./Header.module.scss";
 import "animate.css";
 import Dot from "../Dot/Dot.js";
+import { logoutUser } from "../../actions/auth.js";
 
 const COLORS = ['#B8C3BF', '#008C4F'];
 

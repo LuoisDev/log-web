@@ -4,6 +4,36 @@ import Chart from 'react-apexcharts'
 import moment from "moment";
 
 const Detail = function (props) {
+    let config = {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+    }
+
+    const doGetChart = async (e) => {
+        const url = BASE_URL + '/hc-monitoring/summary';
+
+        try {
+            const res = await axios.get(url, config);
+            console.log('res=========', res.data);
+            if (res.data.success) {
+                console.log('a');
+                let final = []
+                final.push({ name: 'Online', value: res.data.data.online })
+                final.push({ name: 'Offline', value: res.data.data.offline })
+                setDataChart(final)
+                console.log(final);
+            }
+            else {
+                localStorage.removeItem('access_token');
+                return (<Redirect to="/login" />)
+            }
+
+        } catch (err) {
+            console.log('abc', err)
+
+        }
+    }
     const [options, setOptions] = useState({
         chart: {
             height: 350,

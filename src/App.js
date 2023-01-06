@@ -25,9 +25,9 @@ import Layout from "./components/Layout/Layout";
 import LayoutDetail from "./components/LayoutDetail/LayoutDetail";
 
 const PrivateRoute = ({ dispatch, component, ...rest }) => {
-  if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
+  console.log("access",localStorage.getItem("access_token"));
+  if (!isAuthenticated((localStorage.getItem("access_token")))) {
     console.log("Not authenticated");
-    dispatch(logoutUser());
     return (<Redirect to="/login" />)
   } else {
     console.log("Authenticated");

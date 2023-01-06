@@ -44,4 +44,25 @@
   width: 15%;
 }
 
+.widget_p {
+  width: 54vw;
+  margin-top: 32px;
+  padding: 0px 16px;
 
+  @media (max-width: breakpoint-max(xs)) {
+    width: 100vw;
+  }
+}
+.widget_pie {
+  width: 320px;
+  box-shadow: 4px 4px 16px 0 rgba(77, 83, 224, 0.2);
+}
+.button_submit {
+  justify-content: start ;
+  align-items: center;
+  height: 45px;
+  margin-left: 16px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semi-bold;
+  color: $base-color;
+}

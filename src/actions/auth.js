@@ -33,7 +33,7 @@ export function logoutUser() {
   return (dispatch) => {
     console.log('logout');
     dispatch(requestLogout());
-    localStorage.removeItem('authenticated');
+    localStorage.removeItem("access_token");
     dispatch(receiveLogout());
   };
 }
@@ -43,7 +43,6 @@ export function loginUser(creds) {
     dispatch(receiveLogin());
     if (creds.access_token.length > 0 ) {
       console.log('creds.access_token', creds.access_token);
-      localStorage.setItem('authenticated', true)
       localStorage.setItem('access_token', creds.access_token)
 
     } else {
