@@ -61,7 +61,7 @@ const Login = (props) => {
   }
 
   const { from } = props.location.state || { from: { pathname: '/dashboard' } };
-  if (hasToken(JSON.parse(localStorage.getItem('access_token')))) {
+  if (hasToken(localStorage.getItem('access_token'))) {
     console.log('avc');
     return (
       <Redirect to={from} />

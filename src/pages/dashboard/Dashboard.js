@@ -26,7 +26,7 @@ import { BASE_URL } from "../../const/url.js";
 import axios from 'axios';
 import { logoutUser } from "../../actions/auth.js";
 import Dot from "../../components/Dot/Dot.js";
-const COLORS = ['#B8C3BF', '#008C4F'];
+const COLORS = [ '#008C4F' ,'#B8C3BF'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -86,13 +86,13 @@ const Dashboard = function (props) {
         }
         else if (type === 2 && status !== 2) {
             console.log('type 2 status !2');
-            return `${BASE_URL}/hc-monitoring/list?page=${page}&status=${status}&mac=${mac}&version=${version}&lrn=${lrn}`;
+            return `${BASE_URL}/hc-monitoring/list?page=${page}&is_connect=${status}&mac=${mac}&version=${version}&lrn=${lrn}`;
         }
         else if (type !== 2 && status === 2) {
             console.log('type !2 status 2');
-            return `${BASE_URL}/hc-monitoring/list?page=${page}&type=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
+            return `${BASE_URL}/hc-monitoring/list?page=${page}&is_master=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
         }
-        else return `${BASE_URL}/hc-monitoring/list?page=${page}&status=${status}&type=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
+        else return `${BASE_URL}/hc-monitoring/list?page=${page}&is_connect=${status}&is_master=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
 
     }
     const doSearch = async (e) => {
