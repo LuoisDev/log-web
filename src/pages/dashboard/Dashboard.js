@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
     Col,
@@ -26,7 +26,7 @@ import { BASE_URL } from "../../const/url.js";
 import axios from 'axios';
 import { logoutUser } from "../../actions/auth.js";
 import Dot from "../../components/Dot/Dot.js";
-const COLORS = [ '#008C4F' ,'#B8C3BF'];
+const COLORS = ['#008C4F', '#B8C3BF'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -86,13 +86,13 @@ const Dashboard = function (props) {
         }
         else if (type === 2 && status !== 2) {
             console.log('type 2 status !2');
-            return `${BASE_URL}/hc-monitoring/list?page=${page}&is_connect=${status}&mac=${mac}&version=${version}&lrn=${lrn}`;
+            return `${BASE_URL}/hc-monitoring/list?page=${page}&mac=${mac}&version=${version}&lrn=${lrn}`;
         }
         else if (type !== 2 && status === 2) {
             console.log('type !2 status 2');
             return `${BASE_URL}/hc-monitoring/list?page=${page}&is_master=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
         }
-        else return `${BASE_URL}/hc-monitoring/list?page=${page}&is_connect=${status}&is_master=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
+        else return `${BASE_URL}/hc-monitoring/list?page=${page}&is_master=${type}&mac=${mac}&version=${version}&lrn=${lrn}`;
 
     }
     const doSearch = async (e) => {
@@ -104,8 +104,13 @@ const Dashboard = function (props) {
             console.log('res=========', res.data);
             if (res.data.success) {
                 console.log('search');
-                setDataHc(res.data.data)
-
+                if (status === 0) {
+                    console.log('status', status);
+                    let offline_data = res.data.data.filter((item) => item.is_connect === 0);
+                    console.log('offline_data', offline_data);
+                    setDataHc(offline_data)
+                }
+                else setDataHc(res.data.data)
             }
             else {
                 localStorage.removeItem('access_token');
@@ -152,16 +157,17 @@ const Dashboard = function (props) {
     const isFirstRender = useRef(true);
 
     useEffect(() => {
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        return; 
-      }
-      doSearch();
-      console.log('useEffect ran. count is: ', page);
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+        doSearch();
+        console.log('useEffect ran. count is: ', page);
     }, [page]);
     const handleRowClick = (row) => {
         console.log('row', row);
-        history.push({pathname: `/detail` , state:  row.lrn });
+        localStorage.setItem('lrn', row.lrn)
+        history.push({ pathname: `/detail`, state: row.lrn });
 
     }
     const [secondTableCurrentPage, setSecondTableCurrentPage] = useState(0);
@@ -307,15 +313,7 @@ const Dashboard = function (props) {
                                     Offline
                                 </Label>
                             </FormGroup>
-                            <FormGroup
-                                check
-                                inline
-                            >
-                                <Input checked={status === 1} type="checkbox" onChange={(e) => setStatus(1)} />
-                                <Label check>
-                                    Online
-                                </Label>
-                            </FormGroup>
+
                             <FormText className="my-3">Type</FormText>
                             <FormGroup
                                 check
@@ -364,6 +362,8 @@ const Dashboard = function (props) {
                                     <Table className="table-striped table-borderless table-hover" responsive>
                                         <thead>
                                             <tr>
+                                                <th>STT</th>
+
                                                 <th>MAC</th>
                                                 <th>Local IP</th>
                                                 <th>Owner account</th>
@@ -376,14 +376,12 @@ const Dashboard = function (props) {
                                         </thead>
                                         <tbody>
                                             {secondTable
-                                                .slice(
-                                                    secondTableCurrentPage * pageSize,
-                                                    (secondTableCurrentPage + 1) * pageSize
-                                                )
+
                                                 .map((item, index) => (
 
                                                     <tr onClick={() => handleRowClick(item)} key={uuidv4()}>
                                                         {/* <Link to={{pathname: `/detail`,state: item.mac}} > */}
+                                                        <td>{index}</td>
                                                         <td>{item.mac}</td>
                                                         <td>{item.localip}</td>
                                                         <td>{item.owner_account}</td>
@@ -391,7 +389,7 @@ const Dashboard = function (props) {
                                                         <td>{item.hc_version}</td>
                                                         {item.is_active == 1 ? <td><Badge style={{ backgroundColor: base_color }} >Yes</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >No</Badge></td>}
                                                         {item.is_master == 1 ? <td><Badge style={{ backgroundColor: base_color }} >Master</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Slave</Badge></td>}
-                                                        {item.is_connect == 1 ? <td><Badge style={{ backgroundColor: base_color }} >Connect</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Disconnect</Badge></td>}
+                                                        {item.is_connect == 1 ? <td><Badge style={{ backgroundColor: base_color }} >Online</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Offline</Badge></td>}
                                                         {/* </Link> */}
                                                     </tr>
                                                 ))}
@@ -400,19 +398,19 @@ const Dashboard = function (props) {
                                     <Pagination className="pagination-with-border">
                                         <PaginationItem disabled={page <= 1}>
                                             <PaginationLink
-                                                onClick={e => setPage((count) => count-1)}
+                                                onClick={e => setPage((count) => count - 1)}
                                                 previous
                                             />
                                         </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink >
-                                                    {page}
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        
+                                        <PaginationItem>
+                                            <PaginationLink >
+                                                {page}
+                                            </PaginationLink>
+                                        </PaginationItem>
+
                                         <PaginationItem disabled={!secondTable.length}>
                                             <PaginationLink
-                                                onClick={e => setPage((count) => count+1)}
+                                                onClick={e => setPage((count) => count + 1)}
                                                 next
                                             />
                                         </PaginationItem>

@@ -43,6 +43,16 @@ const Sidebar = (props) => {
           link="/dashboard"
           index="dashboard"
         />
+         <h5 className={s.navTitle}>TEMPLATE</h5>
+        <LinksGroup
+          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={props.activeItem}
+          header="Map"
+          isHeader
+          iconName={<i className={'eva eva-map-outline'}/>}
+          link="/dashboard/map"
+          index="typography"
+        />
       </ul>
     </nav>
   );

@@ -1,46 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { FormText } from "reactstrap";
+import { Badge, Button, FormText, Table } from "reactstrap";
 import Chart from 'react-apexcharts'
 import moment from "moment";
 import { BASE_URL } from "../../const/url";
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
+import 'rsuite/dist/rsuite.min.css';
+
+import { DateRangePicker, Stack } from 'rsuite';
+import Widget from "../../components/Widget/Widget";
+import { base_color, inactive_color } from "../../const";
 
 const Detail = function (props) {
-  
+    const [historyData, setHistoryData] = useState([]);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [value, setValue] = React.useState([
+        new Date(),
+        new Date()
+    ]);
     const config = {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
     }
-    const [selectionRange,setSelectionRange] = useState([{
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection',
-    }])
+
     useEffect(() => {
         let mounted = true;
         console.log('access_token', localStorage.getItem('access_token'));
         doGetDetail()
 
-    }, [selectionRange])
-    const handleSelect = (ranges) => {
-        // {
-        //   selection: {
-        //     startDate: [native Date Object],
-        //     endDate: [native Date Object],
-        //   }
-        // }
-        setSelectionRange([ranges.selection])
-        console.log(moment(selectionRange[0].startDate).utc().unix(), moment(selectionRange[0].endDate).utc().unix());
-    }
-  
+    }, [startDate])
+
     const doGetDetail = async (e) => {
 
-        const url = `${BASE_URL}/hc-monitoring/online-offline-history?lrn=${props.location.state}&start_time=${moment(selectionRange[0].startDate).utc().unix()}&end_time=${moment(selectionRange[0].endDate).utc().unix()}`;
+        const url = `${BASE_URL}/hc-monitoring/online-offline-history?lrn=${localStorage.getItem('lrn')}&start_time=${startDate}&end_time=${endDate}`;
         console.log('url', url);
         try {
             console.log(config);
@@ -48,14 +42,13 @@ const Detail = function (props) {
             let data_final = []
             let pre_data = []
             console.log('res.data', res.data);
+            setHistoryData(res.data.data)
             // pre_data=res.data.data
             pre_data.push(res.data.data[0])
             for (let index = 0; index < res.data.data.length; index) {
                 for (let index2 = (index + 1); index2 < (res.data.data.length); index2++) {
                     if (res.data.data[index].connected != res.data.data[index2].connected) {
                         pre_data.push(res.data.data[index2])
-
-
                         index = index2
                         break
                     }
@@ -163,7 +156,7 @@ const Detail = function (props) {
         {
             data: [
                 {
-                    x: 'On',
+                    x: 'Online',
                     y: [
                         moment('24-12-2019 09:15', "DD-MM-YYYY HH:mm").valueOf(),
                         moment('24-12-2019 10:16', "DD-MM-YYYY HH:mm").valueOf()],
@@ -177,7 +170,7 @@ const Detail = function (props) {
                     fillColor: '#B8C3BF'
                 },
                 {
-                    x: 'On',
+                    x: 'Online',
                     y: [
                         moment('24-12-2019 12:17', "DD-MM-YYYY HH:mm").valueOf(),
                         moment('24-12-2019 14:18', "DD-MM-YYYY HH:mm").valueOf()],
@@ -191,7 +184,7 @@ const Detail = function (props) {
                     fillColor: '#B8C3BF'
                 },
                 {
-                    x: 'On',
+                    x: 'Online',
                     y: [
                         moment('24-12-2019 18:20', "DD-MM-YYYY HH:mm").valueOf(),
                         moment('26-12-2019 23:21', "DD-MM-YYYY HH:mm").valueOf()],
@@ -201,18 +194,64 @@ const Detail = function (props) {
         }
     ],)
     console.log(props.location.state);
-    
+
+    const onOk = (value) => {
+        console.log(moment(value[0]).valueOf());
+        setStartDate(moment(value[0]).valueOf())
+        setEndDate(moment(value[1]).valueOf())
+    }
+    const onClean = () => {
+        setStartDate('')
+        setEndDate('')
+    }
     return (
         <div>
-            <FormText>{props.location.state}</FormText>
-            <DateRangePicker
-              showSelectionPreview={true}
+            <Stack direction="row" justifyContent='space-around'>
+                <FormText>{props.location.state}</FormText>
+                <DateRangePicker
+                    value={[new Date(), new Date()]}
+                    // onChange={setValue}
+                    showMeridian
+                    onOk={onOk}
+                    onClean={onClean}
+                    ranges={[]}
+                    format=" HH:mm:ss yyyy-MM-dd"
+                    defaultCalendarValue={[new Date(), new Date()]}
+                />
+            </Stack>
 
-                ranges={selectionRange}
-                onChange={handleSelect}
-            />
             <Chart options={options} series={series} type='rangeBar' width='100%' height='200' />
+            <Widget>
+                <div>
+                    <div className="headline-2">Lịch sử HC</div>
+                </div>
+                <div className="widget-table-overflow">
+                    <Table className="table-striped table-borderless table-hover" responsive>
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {historyData
 
+                                .map((item, index) => (
+
+                                    <tr>
+                                        {/* <Link to={{pathname: `/detail`,state: item.mac}} > */}
+                                        <td>{index}</td>
+                                        <td>{moment.unix(item.time).format("HH:mm:ss MM/DD/YYYY")}</td>
+                                        {item.connected == 1 ? <td><Badge style={{ backgroundColor: base_color }} >Online</Badge></td> : <td><Badge style={{ backgroundColor: inactive_color }} >Offline</Badge></td>}
+                                        {/* </Link> */}
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </Table>
+
+                </div>
+            </Widget>
         </div>
     )
 }

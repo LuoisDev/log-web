@@ -17,6 +17,7 @@ import Dashboard from "../../pages/dashboard/Dashboard";
 // -- Component Styles
 import s from "./Layout.module.scss";
 import Detail from "../../pages/detail/Detail";
+import Map from "../../pages/map/Map";
 
 const Layout = (props) => {
   return (
@@ -28,6 +29,7 @@ const Layout = (props) => {
           <Breadcrumbs url={props.location.pathname} />
           <Switch>
             <Route path="/dashboard" exact component={Dashboard}/>
+            <Route path="/dashboard/map" exact component={Map}/>
             <Route path='*' exact render={() => <Redirect to="/error" />} />
           </Switch>
         </main>
